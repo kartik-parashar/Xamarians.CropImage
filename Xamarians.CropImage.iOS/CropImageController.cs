@@ -266,6 +266,18 @@ namespace Xamarians.CropImage.iOS
 				width = (int)imageRef.Width;
 				height = (int)imageRef.Height;
 
+				if (height >= width)
+				{
+					if (orIn == UIImageOrientation.Up || orIn == UIImageOrientation.Down)
+					{
+						maxSize = (double)imageIn.Size.Height;
+					}
+					else
+					{
+						maxSize = (double)imageIn.Size.Height;
+						alphaInfo = CGImageAlphaInfo.PremultipliedLast;
+					}
+				}
 
 				if (height >= width)
 				{
@@ -287,7 +299,7 @@ namespace Xamarians.CropImage.iOS
 				}
 				else
 				{
-					bitmap = new CGBitmapContext(IntPtr.Zero, height, width, imageRef.BitsPerComponent, imageRef.BytesPerRow, colorSpaceInfo, alphaInfo);
+					bitmap = new CGBitmapContext(IntPtr.Zero, height, width, imageRef.BitsPerComponent, width * imageRef.BitsPerPixel, colorSpaceInfo, alphaInfo);
 				}
 
 				switch (orIn)
